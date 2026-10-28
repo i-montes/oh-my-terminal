@@ -185,7 +185,7 @@ fi
 titulo "Regla de Hyprland (stream sin transparencia)"
 if [[ ! -f $HYPR_LUA ]]; then
   nota "no hay $HYPR_LUA: omito la regla (sin Hyprland el perfil stream funciona igual)"
-elif grep -qF 'imontes\\.stream' "$HYPR_LUA"; then
+elif grep -qF 'oh-my-terminal\\.stream' "$HYPR_LUA"; then
   ok "regla ya presente en $HYPR_LUA"
 else
   hacer cp "$HYPR_LUA" "$HYPR_LUA.bak.$TS"

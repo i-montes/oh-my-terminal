@@ -38,7 +38,7 @@ gperfil         # menú interactivo (gum)
 
 `g stream` cambia **todas** las ventanas de Ghostty abiertas, porque recarga la
 config. Con `g -n stream` la ventana nueva es una instancia aparte
-(`com.imontes.stream`) y es la única que se ve con el perfil de transmisión;
+(`oh-my-terminal.stream`) y es la única que se ve con el perfil de transmisión;
 es la opción para grabar, porque ahí la regla de Hyprland sí aplica.
 
 ## Opciones del instalador
