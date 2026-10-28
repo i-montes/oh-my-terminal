@@ -1,0 +1,15 @@
+/* Tabs compactos con la paleta de marca (cargado desde personal.conf) */
+tabbar > revealer > box { background: #0D0F12; border-bottom: 1px solid #13161B; min-height: 0; }
+tabbar tabbox { min-height: 0; padding: 0; }
+tabbar tabbox > tab, tabbar tab {
+  min-height: 24px;
+  margin: 3px 2px 0 2px;
+  padding: 0 6px;
+  border-radius: 6px 6px 0 0;
+  font-size: 10pt;
+  background: transparent;
+  color: #8A8F98;
+}
+tabbar tab:hover { background: #13161B; color: #B8BCC4; }
+tabbar tab:selected { background: #13161B; color: #E6E6E0; box-shadow: inset 0 -2px #FFB13D; }
+tabbar tabbox > separator { opacity: 0; }

@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# Cambia el perfil de Ghostty: personal o stream.
+#   gperfil              menú para elegir
+#   gperfil personal     vuelve a tu config normal
+#   gperfil stream       aplica stream.conf encima de config
+# Cambia el perfil en las terminales ya abiertas (recarga la config).
+#   gperfil -n [perfil]  en cambio abre una ventana nueva con ese perfil
+
+set -euo pipefail
+
+DIR="$HOME/.config/ghostty"
+STREAM_CONF="$DIR/stream.conf"
+ACTIVO="$DIR/active-profile.conf"
+
+[[ -f $STREAM_CONF ]] || { echo "No existe $STREAM_CONF" >&2; exit 1; }
+
+nueva=0
+if [[ ${1:-} == -n ]]; then nueva=1; shift; fi
+perfil="${1:-}"
+
+if [[ -z $perfil ]]; then
+  if command -v gum >/dev/null; then
+    perfil=$(gum choose --header "Perfil de Ghostty" personal stream) || exit 0
+  else
+    printf '1) personal\n2) stream\nElige: '
+    read -r n
+    case $n in 1) perfil=personal ;; 2) perfil=stream ;; *) exit 0 ;; esac
+  fi
+fi
+
+case $perfil in
+  p) perfil=personal ;;
+  s) perfil=stream ;;
+  personal | stream) ;;
+  *) echo "Uso: gperfil [-n] [personal|stream]" >&2; exit 1 ;;
+esac
+
+if ((nueva)); then
+  if [[ $perfil == stream ]]; then
+    # Instancia propia: con single-instance se reutilizaría la ventana normal
+    # y el perfil no se aplicaría.
+    setsid -f ghostty --gtk-single-instance=false \
+      --config-file="$STREAM_CONF" --working-directory="$PWD" >/dev/null 2>&1
+  else
+    setsid -f ghostty --working-directory="$PWD" >/dev/null 2>&1
+  fi
+  exit 0
+fi
+
+if [[ $perfil == stream ]]; then
+  printf 'config-file = "%s"\n' "$STREAM_CONF" >"$ACTIVO"
+else
+  : >"$ACTIVO"
+fi
+
+# Ghostty recarga su config al recibir SIGUSR2.
+pkill -USR2 -x ghostty || true
+echo "Perfil: $perfil"
