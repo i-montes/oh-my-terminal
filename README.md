@@ -90,3 +90,7 @@ Todos los colores de texto superan 5:1 de contraste sobre el fondo.
   toca y avisa.
 - `Ctrl+V` pega solo en el perfil stream. Para tenerlo siempre, mueve esa línea
   (`keybind = ctrl+v=paste_from_clipboard`) de `stream.conf` a `personal.conf`.
+
+## Licencia
+
+[MIT](LICENSE)
